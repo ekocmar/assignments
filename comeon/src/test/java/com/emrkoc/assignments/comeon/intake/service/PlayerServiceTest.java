@@ -86,5 +86,15 @@ public class PlayerServiceTest {
         playerService.getPlayerByName(PLAYER_NAME);
     }
 
+    @Test
+    public void shouldReturnAllPlayers() {
+        when(playerDao.findAll()).thenReturn(Collections.singletonList(player));
+        List<Player> allPlayers = playerService.getAllPlayers();
+
+        verify(playerDao).findAll();
+
+        assertThat(allPlayers).hasSize(1).containsExactly(player);
+    }
+
 
 }

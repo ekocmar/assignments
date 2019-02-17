@@ -30,12 +30,13 @@ public class PlayerControllerTest {
     public void shouldCreatePlayer() {
         String playerName = "Emrullah";
         when(player.getName()).thenReturn(playerName);
+        when(playerService.createPlayer(player)).thenReturn(player);
 
-        String response = controller.createPlayer(this.player);
+        Player createdPlayer = controller.createPlayer(this.player);
 
         verify(playerService).createPlayer(player);
 
-        assertThat(response).contains(playerName);
+        assertThat(createdPlayer.getName()).isEqualTo(playerName);
     }
 
     @Test
@@ -45,7 +46,7 @@ public class PlayerControllerTest {
         List<Player> players = Collections.singletonList(player);
         when(playerService.getPlayerByName(playerName)).thenReturn(players);
 
-        List<Player> returnedPlayers = controller.getPlayer(playerName);
+        List<Player> returnedPlayers = controller.getPlayer(null, playerName);
 
         verify(playerService).getPlayerByName(playerName);
 

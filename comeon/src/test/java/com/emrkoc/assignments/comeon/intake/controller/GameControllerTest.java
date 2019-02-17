@@ -31,11 +31,11 @@ public class GameControllerTest {
         String gameName = "Poker";
         when(game.getName()).thenReturn(gameName);
         when(gameService.createGame(game)).thenReturn(game);
-        String response = controller.createGame(game);
+        Game createdGame = controller.createGame(game);
 
         verify(gameService).createGame(game);
 
-        assertThat(response).contains(gameName);
+        assertThat(createdGame.getName()).isEqualTo(gameName);
     }
 
     @Test

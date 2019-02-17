@@ -1,6 +1,5 @@
 package com.emrkoc.assignments.comeon.intake.service;
 
-import com.emrkoc.assignments.comeon.persistence.GameDao;
 import com.emrkoc.assignments.comeon.persistence.GameLoveDao;
 import com.emrkoc.assignments.comeon.persistence.LovedGame;
 import com.emrkoc.assignments.comeon.persistence.model.Game;
@@ -9,19 +8,19 @@ import com.emrkoc.assignments.comeon.persistence.model.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class GameLoveService {
 
     private final GameLoveDao gameLoveDao;
-    private final GameDao gameDao;
 
     @Autowired
-    public GameLoveService(GameLoveDao gameLoveDao, GameDao gameDao) {
+    public GameLoveService(GameLoveDao gameLoveDao) {
         this.gameLoveDao = gameLoveDao;
-        this.gameDao = gameDao;
     }
 
     public List<Game> getPlayersLovedGames(Player player) {
@@ -32,9 +31,11 @@ public class GameLoveService {
 
     public List<LovedGame> getLovedGames(Integer top) {
         List<LovedGame> lovedGames = new ArrayList<>();
-        List<Game> collect = gameLoveDao.findAllByLovedEquals(true).stream().map(GameLove::getGame).collect(Collectors.toList());
+        List<Game> allLovedGames = gameLoveDao.findAllByLovedEquals(true).stream()
+                .map(GameLove::getGame)
+                .collect(Collectors.toList());
 
-        for (Game game : collect) {
+        for (Game game : allLovedGames) {
             countLoved(game, lovedGames);
         }
 
@@ -70,7 +71,8 @@ public class GameLoveService {
     }
 
     private void countLoved(Game gameToCount, List<LovedGame> games) {
-        Optional<LovedGame> foundGame = games.stream().filter(lovedGame -> lovedGame.getGame().getId().equals(gameToCount.getId()))
+        Optional<LovedGame> foundGame = games.stream()
+                .filter(lovedGame -> lovedGame.getGame().getId().equals(gameToCount.getId()))
                 .findFirst();
         if (foundGame.isPresent()) {
             foundGame.get().incrementLovedCount();
