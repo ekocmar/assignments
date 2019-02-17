@@ -17,7 +17,7 @@ public class Game implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "GAME_ID")
-    private Long id;
+    private long id;
 
     @Column(name = "GAME_NAME")
     private String name;

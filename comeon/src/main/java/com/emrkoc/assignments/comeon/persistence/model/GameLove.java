@@ -17,7 +17,7 @@ public class GameLove implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    private long id;
 
     @OneToOne
     @JoinColumn(name = "PLAYER_ID")

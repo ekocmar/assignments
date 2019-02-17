@@ -72,7 +72,7 @@ public class GameLoveService {
 
     private void countLoved(Game gameToCount, List<LovedGame> games) {
         Optional<LovedGame> foundGame = games.stream()
-                .filter(lovedGame -> lovedGame.getGame().getId().equals(gameToCount.getId()))
+                .filter(lovedGame -> lovedGame.getGame().getId() == gameToCount.getId())
                 .findFirst();
         if (foundGame.isPresent()) {
             foundGame.get().incrementLovedCount();
