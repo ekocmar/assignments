@@ -40,4 +40,5 @@ example usage: /ws/v0/love?playerId=1&gameId=5
 example usage: /ws/v0/unlove?playerId=1&gameId=5
 
 # Extra info
-extra info can be found on javadoc descriptions.
+extra info can be found on javadoc descriptions. 
+postman collection:https://www.getpostman.com/collections/837455e12a0879589338
